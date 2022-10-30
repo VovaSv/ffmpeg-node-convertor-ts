@@ -25,4 +25,24 @@ import inquirer from 'inquirer';
         name: 'result',
         message: 'Name'
     }])
+
+    const res = spawn('ffmpeg', [
+        '-i', path,
+        '-c:v', 'libx264',
+        '-s', `${width}x${height}`,
+        path + name + '.mp4',
+    ])
+
+    res.stdout.on('data', (data: any) =>{
+        console.log(data.toString());
+    })
+
+    res.stderr.on('data', (data: any) =>{
+        console.log(data.toString());
+    })
+
+    res.on('close', () =>{
+        console.log('Done');
+    })
+
 })();
